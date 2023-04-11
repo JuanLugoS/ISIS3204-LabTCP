@@ -4,9 +4,13 @@ import hashlib
 import warnings
 
 ClientMultiSocket = socket.socket()
-host = '192.168.50.124'
-port = 2004
-BUFFER_SIZE = 4096  
+
+f = open("run.cnf", "r")
+host = f.readline().strip()
+port = int(f.readline().strip())
+BUFFER_SIZE = int(f.readline().strip())
+f.close()
+
 print('Waiting for connection response')
 try:
     ClientMultiSocket.connect((host, port))
@@ -14,13 +18,11 @@ except socket.error as e:
     print(str(e))
 
 print(ClientMultiSocket.recv(1024).decode())
-
 vwr = ClientMultiSocket.recv(BUFFER_SIZE).decode()
-print(vwr)
 
 while vwr is None:
     vwr = ClientMultiSocket.recv(BUFFER_SIZE).decode()
-    print(vwr)
+
     
 lista = vwr.split("<SEPARATOR>")
 
@@ -46,14 +48,8 @@ print(f"\rArchivo guardado exitosamente.")
 print(f"La velocidad de transferencia fue: {vel_transfer} MB/s")
 print(f"Tiempo de transferencia fue: {round(t_total, 1)} s")
 
-BLOCK_SIZE = 65536 # The size of each read from the file
-
-
-
 f = open(nombre_arc, "rb")
-
 fb = f.read()
-
 f.close()
 
 file_hash = hashlib.md5(fb)
