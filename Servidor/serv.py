@@ -11,12 +11,12 @@ ThreadCount = 0
 BUFFER_SIZE = 4096
 SEPARATOR = "<SEPARATOR>" 
 
-logging.basicConfig(filename='con.log', encoding='utf-8', level=logging.DEBUG)
+logging.basicConfig(filename='conslog.log', level=logging.DEBUG)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
-        logging.FileHandler("con.log"),
+        logging.FileHandler("conslog.log"),
         logging.StreamHandler()
     ]
 )
